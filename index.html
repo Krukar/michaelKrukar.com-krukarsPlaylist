@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="" data-ng-app="krukarsPlaylist">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title data-ng-bind="header">Krukar's Playlist</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-ng-controller="mainController">
+
+    <div class="menuToggle">
+
+        <a class="music" href="" data-ng-click="showMenu = !showMenu"></a>
+
+    </div>
+
+    <div class="main">
+
+        <div class="current">
+
+            <div class="songInfo" data-ng-cloak>
+
+                <h1>{{playlist[currentSong].title}}</h1>
+                <h2>{{playlist[currentSong].artist}}</h2>
+
+            </div>
+
+            <div class="controlsContainer">
+
+                <ul class="controls">
+                    <li class="controls_item"><a href="" class="play" data-ng-click="pauseVideo()" data-ng-class="pause ? 'on' : ''"></a></li>
+                    <li class="controls_item"><a href="" class="previous" data-ng-click="previousSong()"></a></li>
+                    <li class="controls_item"><a href="" class="next" data-ng-click="nextSong()"></a></li>
+                    <li class="controls_item"><a href="" class="mute" data-ng-click="toggleMute()" data-ng-class="mute ? 'on' : ''"></a></li>
+                    <li class="controls_item"><a href="" class="shuffle" data-ng-click="toggleShuffle()" data-ng-class="shuffle ? 'on' : ''"></a></li>
+                    <li class="controls_item"><a href="" class="video" data-ng-click="toggleVideo()" data-ng-class="showVideo ? 'on' : ''"></a></li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="search">
+
+            <form class="search_form" data-ng-submit="submitSearch()">
+                <input class="search_input" type="text" autocomplete="off" placeholder="WHAT WOULD YOU LIKE TO LISTEN TO?" data-ng-model="newSearch" data-ng-keyUp="quickSearch()" required autofocus>
+                <a class="x" href="" data-ng-click="resetForm()"></a>
+            </form>
+
+        </div>
+
+        <div class="results">
+
+        <ul class="results_list">
+                <li data-ng-repeat="searchResult in results | limitTo: 10"><a class="results_item" href="" data-ng-click="clickResult()">{{searchResult.artist}} - {{searchResult.title}}</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="offCanvas" data-ng-show="showMenu">
+
+        <div class="section">
+
+            <div class="section_header">
+
+                <div class="menuToggle">
+
+                    <a class="music" href="" data-ng-click="showMenu = !showMenu"></a>
+
+                </div>
+
+                <div class="clearPlaylist">
+
+                    <a href="" data-ng-click="clearPlaylist()">Clear playlist</a>
+
+                </div>
+
+                <div class="confirm" data-ng-show="confirm">Delete entire playlist?</div>
+
+            </div>
+
+            <ul class="playlist_list" id="js_playlist">
+                <li class="playlist_item" data-ng-repeat="song in playlist track by $index" data-ng-class="{'active': $index == currentSong}"><a class="playlist_song" href="" data-ng-click="goToSong()">{{song.artist}} <span data-ng-show="song.artist">-</span> {{song.title}}</a><a class="x" href="" data-ng-click="removeSong()"></a></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="logo">
+        <img class="logo_img" src="img/krukarsPlaylist.png">
+    </div>
+
+    <div class="popUp" data-ng-show="showPopUp" data-ng-cloak>
+        {{popUpMessage}}
+    </div>
+
+    <div class="videoContainer" data-ng-show="showVideo">
+        <div id="video"></div>
+    </div>
+
+    <script src="js/angular.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
