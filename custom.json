@@ -1,6 +1,11 @@
 {  
    "krukar":[  
       {  
+         "artist":"Childish Gambino",
+         "title":"Sober",
+         "id":"LewwudsqV24"
+      },
+      {  
          "artist":"Yves Simon",
          "title":"Au Pays Des Merveilles De Juliet (Psychemagik Edit)",
          "id":"KFci4JYwWaU"
@@ -21,24 +26,9 @@
          "id":"EEDTDhjXlWk"
       },
       {  
-         "artist":"Lykke Li",
-         "title":"I Never Learn",
-         "id":"kwyJBFa4_5E"
-      },
-      {  
          "artist":"Pool House Preachers",
          "title":"Springbreak (Hot and Sweaty Mix)",
          "id":"C5fvQJMWsXg"
-      },
-      {  
-         "artist":"Röyksopp",
-         "title":"You Don't Have a Clue (feat. Anneli Drecker)",
-         "id":"gGN3Yt78I8U"
-      },
-      {  
-         "artist":"Blunda",
-         "title":"If You Want Me",
-         "id":"kEhX7O6FZcs"
       },
       {  
          "artist":"Say Lou Lou",
@@ -201,11 +191,6 @@
          "id":"YEUg6FBRSNY"
       },
       {  
-         "artist":"Pional",
-         "title":"A New Dawn",
-         "id":"AyznOUciGi8"
-      },
-      {  
          "artist":"Movement",
          "title":"Ivory",
          "id":"eebku3MbA2o"
@@ -259,11 +244,6 @@
          "artist":"Ugress",
          "title":"THE BOSPORUS INCIDENT",
          "id":"3ViNgyZOWME"
-      },
-      {  
-         "artist":"Tycho",
-         "title":"Awake",
-         "id":"qEI1_oGPQr0"
       },
       {  
          "artist":"Röyksopp",
@@ -351,16 +331,6 @@
          "id":"BJwEwiWizfQ"
       },
       {  
-         "artist":"Moby",
-         "title":"Rio",
-         "id":"jCVs4rDfYdY"
-      },
-      {  
-         "artist":"Towa Tei",
-         "title":"Teenage Mutants",
-         "id":"Jpa4j4954xQ"
-      },
-      {  
          "artist":"Magnetic Man",
          "title":"Getting Nowhere (feat. John Legend)",
          "id":"zRnDIXsGIyc"
@@ -426,11 +396,6 @@
          "id":"6ETYeofspN4"
       },
       {  
-         "artist":"Kaleida",
-         "title":"Think",
-         "id":"HkhSZyYmpO4"
-      },
-      {  
          "artist":"Viton & Stel",
          "title":"Nightmare",
          "id":"cu33amsFAd4"
@@ -491,8 +456,8 @@
          "id":"DWW99hXDrf8"
       },
       {  
-         "artist":"",
-         "title":"SLOSLYLOVE: DA HAUNTINGS",
+         "artist": "SLOSLYLOVE",
+         "title":"DA HAUNTINGS",
          "id":"edanUuot180"
       },
       {  
@@ -581,11 +546,6 @@
          "id":"ibuSxgL83dE"
       },
       {  
-         "artist":"Tony Allen",
-         "title":"Go Back (feat. Damon Albarn)",
-         "id":"AZ0xRiRLbbc"
-      },
-      {  
          "artist":"The School",
          "title":"It's Not The Same",
          "id":"oAJSZgC556c"
@@ -594,318 +554,6 @@
          "artist":"Basement Freaks",
          "title":"The Last Train",
          "id":"QktqyYL0qWo"
-      }
-   ],
-   "marina":[  
-      {  
-         "artist":"Ariel Pink's Haunted Graffiti",
-         "title":"Ariel Pink's Haunted Graffiti - Menopause Man",
-         "id":"91lMOYMuN40"
-      },
-      {  
-         "artist":"",
-         "title":"Christopher Norman - Maps",
-         "id":"t5_rdoEf180"
-      },
-      {  
-         "artist":"Dear and the Headlights",
-         "title":"Dear And The Headlights - Daysleeper",
-         "id":"kxt2dk6PEdQ"
-      },
-      {  
-         "artist":"",
-         "title":"Joanna Newsom - Book of Right On (Clouds dubstep Mix)",
-         "id":"GcwkAJPXTfU"
-      },
-      {  
-         "artist":"",
-         "title":"Trophy Scars- Alligator. Alligators.(LYRICS)",
-         "id":"a_1017lZ6qo"
-      },
-      {  
-         "artist":"The Cribs",
-         "title":"We Were Aborted - Live",
-         "id":"bWKxG8v6-yI"
-      },
-      {  
-         "artist":"NazcarNation",
-         "title":"NazcarNation - Beeswax (Star Slinger Remix)",
-         "id":"8XMwgrk6jaM"
-      },
-      {  
-         "artist":"Zola Jesus - Trust Me",
-         "title":"zolatrust",
-         "id":"uIlaw4PEqsw"
-      },
-      {  
-         "artist":"[unknown]",
-         "title":"Macklemore X Ryan Lewis - Otherside Remix Feat. Fences.",
-         "id":"fvDQy53eldY"
-      },
-      {  
-         "artist":"Beirut",
-         "title":"Beirut - Elephant Gun",
-         "id":"SWSz_PAfgNc"
-      },
-      {  
-         "artist":"The Knife",
-         "title":"you make me like charity - live",
-         "id":"oB0DZTlL9fw"
-      },
-      {  
-         "artist":"Talking Heads",
-         "title":"Psycho Killer - 2005 Remastered Album Version",
-         "id":"5cOgEZcFoHA"
-      },
-      {  
-         "artist":"Wolf Parade",
-         "title":"Wolf Parade - I'll Believe in Anything",
-         "id":"KOfpiP8FYkg"
-      },
-      {  
-         "artist":"",
-         "title":"I Just Want U 2 Myself - Brite Lite Brite",
-         "id":"F1LNEhOoUC4"
-      },
-      {  
-         "artist":"Studio Killers",
-         "title":"Studio Killers - Ode To The Bouncer",
-         "id":"R6kXsSJlOio"
-      },
-      {  
-         "artist":"",
-         "title":"there will be fireworks - Guising",
-         "id":"VM5br6hRFMs"
-      },
-      {  
-         "artist":"The Clash",
-         "title":"Should I Stay or Should I Go - Remastered",
-         "id":"rhENh7AWNXY"
-      },
-      {  
-         "artist":"Beirut",
-         "title":"Beirut - Forks And Knives (La Fete)",
-         "id":"uRxgDAC-4kI"
-      },
-      {  
-         "artist":"La Dispute",
-         "title":"La Dispute - all our bruised bodies and the whole heart shrinks",
-         "id":"T_401Kw5Pg8"
-      },
-      {  
-         "artist":"",
-         "title":"Computer Magic - End of Time (STAY + [Christian AIDS] Remix)",
-         "id":"8IFrdCVAKMs"
-      },
-      {  
-         "artist":"",
-         "title":"All get  out | Lucky Bastard",
-         "id":"P1elqnnzO8E"
-      },
-      {  
-         "artist":"",
-         "title":"Dead Girls Dance - Oberhofer",
-         "id":"-HGHL7gw5r4"
-      },
-      {  
-         "artist":"",
-         "title":"SLIM TWIG - Trembletongue",
-         "id":"qC1Qvgic5EA"
-      },
-      {  
-         "artist":"Laurent Wolf",
-         "title":"Walk the Line - laurent wolf remix",
-         "id":"JIU3IAb_gw8"
-      },
-      {  
-         "artist":"",
-         "title":"Neon Love - Armistice (Armistice EP)",
-         "id":"Vs5zb4SM7lY"
-      },
-      {  
-         "artist":"Purity Ring",
-         "title":"purity ring - Lofticries",
-         "id":"PmRraoL9v7k"
-      },
-      {  
-         "artist":"Black Sabbath",
-         "title":"Iron Man",
-         "id":"9LjbMVXj0F8"
-      },
-      {  
-         "artist":"311",
-         "title":"311 - love song",
-         "id":"egX9ZDaIrkU"
-      },
-      {  
-         "artist":"",
-         "title":"Fthrsn - Nothing's The Matter",
-         "id":"hOzLutZvrTk"
-      },
-      {  
-         "artist":"Wolf Parade",
-         "title":"03 - Grounds for Divorce",
-         "id":"9PgnMFKkxs0"
-      },
-      {  
-         "artist":"Ra Ra Riot",
-         "title":"Ra Ra Riot - Can You Tell",
-         "id":"asY08yquddo"
-      },
-      {  
-         "artist":"Moving Mountains",
-         "title":"Moving Mountains - Aphelion",
-         "id":"h6yokbJ23KY"
-      },
-      {  
-         "artist":"Trophy Scars",
-         "title":"15 - Anxiety. Anxieties.",
-         "id":"yY58jP8KyEo"
-      },
-      {  
-         "artist":"Trophy Scars",
-         "title":"09 - Absolute. Absolutes.",
-         "id":"fDkuKSjnNv4"
-      },
-      {  
-         "artist":"",
-         "title":"Jaguar Love. My Organ Sounds Like...",
-         "id":"DvlkROtaZEI"
-      },
-      {  
-         "artist":"Cage",
-         "title":"Cage - I Never Knew You",
-         "id":"F4Sxm6zx4e8"
-      },
-      {  
-         "artist":"The Knife",
-         "title":"Heartbeats - Live",
-         "id":"VrjwqXwyzNU"
-      },
-      {  
-         "artist":"",
-         "title":"Rocks in a Dryer By Michou",
-         "id":"25ZO7lZqm4o"
-      },
-      {  
-         "artist":"",
-         "title":"M - Pop Muzik (Don Rimini Remix)",
-         "id":"EDvDtnItTNI"
-      },
-      {  
-         "artist":"",
-         "title":"Medea by Michou",
-         "id":"MIV4rWI636k"
-      },
-      {  
-         "artist":"",
-         "title":"Michou • \"Eavesdropping\" Official Music Video",
-         "id":"_rsYWNfyBao"
-      },
-      {  
-         "artist":"",
-         "title":"Michou • \"Growing Younger\" Official Music Video",
-         "id":"tNIJBJytivk"
-      },
-      {  
-         "artist":"",
-         "title":"Trophy Scars- ...And That's Where They Found My Body",
-         "id":"HtPJir2N9bM"
-      },
-      {  
-         "artist":"",
-         "title":"Slim Twig - Gate Hearing!",
-         "id":"KcZuzSibu2U"
-      },
-      {  
-         "artist":"La Dispute",
-         "title":"La Dispute - Nine",
-         "id":"fPppInfmpvo"
-      },
-      {  
-         "artist":"",
-         "title":"Audrey - Northern Lights",
-         "id":"Pt0LM-a3ppU"
-      },
-      {  
-         "artist":"The Black Atlantic",
-         "title":"The Black Atlantic - Dandelion",
-         "id":"WT9yhmm_47k"
-      },
-      {  
-         "artist":"",
-         "title":"Nike sb zoom stefan janoski beach cnvs pr qs sand trap multicolor",
-         "id":"H3TQDBqFXBo"
-      },
-      {  
-         "artist":"",
-         "title":"The Rifles - I Could Never Lie",
-         "id":"89RSni9oDMw"
-      },
-      {  
-         "artist":"[unknown]",
-         "title":"I Am X-Ray - Pretty Rave Girl",
-         "id":"zlnnXdw8A50"
-      },
-      {  
-         "artist":"",
-         "title":"Switched On - Islands",
-         "id":"zPUouMg2Eb8"
-      },
-      {  
-         "artist":"La Dispute",
-         "title":"La Dispute - Andria",
-         "id":"Clk5AUJZVa0"
-      },
-      {  
-         "artist":"Operahouse",
-         "title":"Operahouse - Change In Nature",
-         "id":"Jq8YRt1tdMY"
-      },
-      {  
-         "artist":"Howard Shore",
-         "title":"Main Theme - Requiem for a Dream",
-         "id":"BNJUQaWpe4U"
-      },
-      {  
-         "artist":"Ra Ra Riot",
-         "title":"Ra Ra Riot - Dying Is Fine",
-         "id":"NGuP6ZN8Qxo"
-      },
-      {  
-         "artist":"Andy Williams - Can't Take My Eyes Off You",
-         "title":"Andy Williams - Can't Take My Eyes Off You",
-         "id":"OxahtnSAzgU"
-      },
-      {  
-         "artist":"Lisa Mitchell",
-         "title":"lisa mitchell - Coin Laundry",
-         "id":"90DflEOXi9E"
-      },
-      {  
-         "artist":"",
-         "title":"Thirteen Things - Elephant Parade",
-         "id":"DDAg3YVLXmU"
-      },
-      {  
-         "artist":"Portishead",
-         "title":"Roads - Live",
-         "id":"Vg1jyL3cr60"
-      },
-      {  
-         "artist":"Beirut",
-         "title":"Beirut - My Wife, Lost in the Wild",
-         "id":"w1m975PSevQ"
-      },
-      {  
-         "artist":"Autoerotique",
-         "title":"AutoErotique - Gladiator (Steve Aoki x DJ AM Remix)",
-         "id":"xKeiL4FDO0M"
-      },
-      {  
-         "artist":"Dan Mangan",
-         "title":"Dan Mangan - The Indie Queens Are Waiting",
-         "id":"J5RIHff3oas"
       }
    ],
    "live laugh love":[  

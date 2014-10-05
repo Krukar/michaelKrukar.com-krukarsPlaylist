@@ -5,8 +5,8 @@ Table of Contents
 - Tools (Mixins, box-sizing, angular stuff)
 - Generic (body)
 - Typography
-- Objects (containers)
-- Components (reusable items)
+- Objects
+- Responsive
 
 Order of appearances
  @include
@@ -24,7 +24,7 @@ Order of appearances
  line-height
  color
  z-index 
- 	- confirm 100
+ 	- popUp 100
  	- menu-toggle 15
  	- off-canvas 10
  	- main 5
@@ -37,6 +37,7 @@ Order of appearances
 #TOOLS
 \*------------------------------------*/
 
+/* Variables */ 
 $white: #ffffff;
 $light: #e6e7e8;
 $grey: #929294;
@@ -44,31 +45,42 @@ $dark: #111111;
 $black: #000000;
 $red: #ED2724;
 
-@mixin family{
-	font-family: "bebas", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-}
 
-@mixin slide{
-	-webkit-transition:all 0.8s cubic-bezier(0.7,0,0.3,1);
-	transition:all 0.8s cubic-bezier(0.7,0,0.3,1);
+/* Mixins */ 
+@mixin fonts{
+	font-family: "bebas", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 }
 
 @mixin debug{
 	border:solid red thin;
 }
 
+@mixin cubic{
+	-webkit-transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+	transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+/* Angular cloak */ 
+[data-ng-cloak]{ display: none !important; }
+
+/* Border Box */ 
 html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
 
-[data-ng-cloak]{ display: none !important; }
+/* Selection color */ 
+::-moz-selection { background: $black; }
+::selection { background: $black; }
 
+/* Placeholder color */ 
 ::-webkit-input-placeholder { color: $black; }
 :-moz-placeholder { color: $black; }
 ::-moz-placeholder { color: $black; }
 :-ms-input-placeholder { color: $black; }
 
+/* Input focus */ 
 textarea:focus, input:focus{ outline: 0; }
 
+/* Scrollbar */ 
 ::-webkit-scrollbar {
 	width: 0.5em;
 }
@@ -81,6 +93,8 @@ textarea:focus, input:focus{ outline: 0; }
 	background:$red; 
 }
 
+
+/* Hidden videos don't work on Firefox, so force video to show and hide video toggle button */ 
 @-moz-document url-prefix(){
 	.videoContainer{
 		display:initial !important;
@@ -96,7 +110,7 @@ textarea:focus, input:focus{ outline: 0; }
 \*------------------------------------*/
 
 body {
-	@include family;
+	@include fonts;
 	background: url(../img/background.jpg) no-repeat center center fixed;
 	height:100%;
 	width:100%;
@@ -129,13 +143,9 @@ a{
 	letter-spacing:3px;
 }
 
-h1{
-	font-size:5em;
-}
-
-h2{
-	font-size:3em;
-	color:$grey;
+p{
+	margin:0.5em 0;
+	padding:0;
 }
 
 /*------------------------------------*\
@@ -144,6 +154,7 @@ h2{
 
 .main{
 	height:100vh;
+	width:50%;
 	margin:0 auto;
 	z-index:5;
 }
@@ -176,23 +187,29 @@ h2{
 	width:1.5em;
 }
 
+.cloud{
+	display:inline-block;
+	height:1em;
+	width:2em;
+}
+
 .play{
-	background:url(../img/icons/pause.svg) no-repeat;
-	background-size:contain;
-}
-
-.play:hover{
-	background:url(../img/icons/pause-red.svg) no-repeat;
-	background-size:contain;
-}
-
-.play.on{
 	background:url(../img/icons/play.svg) no-repeat;
 	background-size:contain;
 }
 
-.play.on:hover{
+.play:hover{
 	background:url(../img/icons/play-red.svg) no-repeat;
+	background-size:contain;
+}
+
+.play.on{
+	background:url(../img/icons/pause.svg) no-repeat;
+	background-size:contain;
+}
+
+.play.on:hover{
+	background:url(../img/icons/pause-red.svg) no-repeat;
 	background-size:contain;
 }
 
@@ -276,12 +293,22 @@ h2{
 	background-size:contain;
 }
 
+.cloud{
+	background:url(../img/icons/cloud.svg) no-repeat;
+	background-size:contain;
+}
+
+.cloud:hover{
+	background:url(../img/icons/cloud-red.svg) no-repeat;
+	background-size:contain;
+}
+
 .search_form{
 	position:relative;
 }
 
 .search_input{
-	@include family;
+	@include fonts;
 	width:100%;
 	padding:0.5em;
 	text-align:center;
@@ -306,12 +333,38 @@ h2{
 }
 
 .popUp{
-	@include slide;
+	@include cubic;
 	background:$red;
 	position:fixed;
-	top:1em;
-	right:1em;
-	padding:1em;
+	z-index:100;
+}
+
+.popUpText{
+	margin-right:1em;
+}
+
+.popUp.ng-hide{
+	display:initial !important;
+	-ms-transform: translate(150%);
+	-webkit-transform: translate(150%);
+	transform: translate(150%);
+}
+
+.offCanvas{
+	@include cubic;
+	background:$dark;
+	position:fixed;
+	top:0;
+	height:100vh;
+	width:20em;
+	z-index:15;
+}
+
+.offCanvas.ng-hide{
+	display: initial !important;
+	-ms-transform: translate(-100%);
+	-webkit-transform: translate(-100%);
+	transform: translate(-100%);
 }
 
 .menuToggle{
@@ -321,31 +374,12 @@ h2{
 	z-index:10;
 }
 
-.offCanvas{
-	@include slide;
-	background:$dark;
-	position:fixed;
-	top:0;
-	left:0;
-	height:100vh;
-	width:20em;
-	z-index:15;
-}
-
-.offCanvas.ng-hide{
-	display:initial !important;
-	left:-25em;
-}
-
 .music{
+	background:url(../img/icons/music.svg) no-repeat;
+	background-size:contain;
 	display:block;
 	height:1.5em;
 	width:1.5em;
-}
-
-.music{ 
-	background:url(../img/icons/music.svg) no-repeat;
-	background-size:contain;
 }
 
 .music:hover{
@@ -354,7 +388,6 @@ h2{
 }
 
 .section{
-	@include slide;
 	background:$dark;
 	width: 20em;
 }
@@ -412,54 +445,6 @@ h2{
 	color:$black;
 }
 
-.videoContainer{
-	position:fixed;
-	height:100%;
-	width:100%;
-	top:0;
-	left:0;
-	z-index:-10;
-}
-
-.logo{
-	z-index:-5;
-}
-
-/*------------------------------------*\
-#COMPONENTS
-\*------------------------------------*/
-
-.playlist_item .x, .search .x{
-	background:url(../img/icons/x-black.svg) no-repeat;
-	background-size:contain;
-	position:absolute;
-	top:50%;
-	right:0.5em;
-	height:0.8em;
-	width:0.8em;
-	transform: translateY(-50%);
-}
-
-.active .x{
-	background:url(../img/icons/x-white.svg) no-repeat;
-	background-size:contain;
-}
-
-.playlist_item .x:hover, .search .x:hover{
-	background:url(../img/icons/x-red.svg) no-repeat;
-	background-size:contain;
-}
-
-.active .x:hover{
-	background:url(../img/icons/x-black.svg) no-repeat;
-	background-size:contain;
-}
-
-.search .x{
-	height:1em;
-	width:1em;
-}
-
 .clearPlaylist{
 	background: $red;
 	position:absolute;
@@ -476,14 +461,124 @@ h2{
 	color:$black;
 }
 
+.videoContainer{
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	z-index:-10;
+}
+
+.logo{
+	position:fixed;
+	right:1em;
+	bottom:1em;
+	z-index:-5;
+}
+
+.logo_img{
+	width:15em;
+	max-width:300px;
+}
+
+.playlist_item .x, .search .x, .popUp .x{
+	background:url(../img/icons/x-black.svg) no-repeat;
+	background-size:contain;
+	position:absolute;
+	top:50%;
+	right:0.5em;
+	height:0.8em;
+	width:0.8em;
+	-ms-transform: translateY(-50%); /* IE 9 */
+	-webkit-transform: translateY(-50%); /* Chrome, Safari, Opera */
+	transform: translateY(-50%);
+}
+
+.active .x, .popUp .x{
+	background:url(../img/icons/x-white.svg) no-repeat;
+	background-size:contain;
+}
+
+.playlist_item .x:hover, .search .x:hover{
+	background:url(../img/icons/x-red.svg) no-repeat;
+	background-size:contain;
+}
+
+.active .x:hover, .popUp .x:hover{
+	background:url(../img/icons/x-black.svg) no-repeat;
+	background-size:contain;
+}
+
+.search .x{
+	height:1em;
+	width:1em;
+}
+
 /*------------------------------------*\
-#Mobile
+#RESPONSIVE
 \*------------------------------------*/
 
-@media (min-width: 1025px) {
+@media all and (max-width:960px){
 
+	h1{
+		font-size:3em;
+	}
+
+	h2{
+		font-size:2em;
+		color:$grey;
+	}
+	
 	.main{
-		width:50%;
+		width:100%;
+	}
+
+	.songInfo{
+		width:100%;
+	}
+
+	.controlsContainer{
+		background:$black;
+		position:relative;
+		height:3em;
+	}
+
+	.controls{
+		top:1em;
+		right:1em;
+	}
+
+	.offCanvas{
+		width:100%;
+	}
+
+	.search_input{
+		font-size:1em;
+	}
+
+	.results_list{
+		font-size:1em;
+		line-height:1.25;
+	}
+
+	.popUp{
+		top:4em;
+		right:1em;
+		padding:0.5em;
+	}
+
+}
+
+@media all and (min-width:961px){
+
+	h1{
+		font-size:5em;
+	}
+
+	h2{
+		font-size:3em;
+		color:$grey;
 	}
 
 	.controls{
@@ -501,78 +596,13 @@ h2{
 
 	.results_list{
 		font-size:1.5em;
+		line-height:1.5;
 	}
 
-	.logo{
-		position:fixed;
-		right:1em;
-		bottom:1em;
-	}
-
-	.logo_img{
-		width:15em;
-	}
-
-}
-
-@media (max-width: 1024px) {
-
-	.main{
-		width:100%;
-	}
-
-	.controlsContainer{
-		position:relative;
-		background:$black;
-		height:3em;
-		z-index:5;
-	}
-
-	.controls{
+	.popUp{
 		top:1em;
 		right:1em;
-	}
-
-	.search_input{
-		font-size:1.5em;
-	}
-
-	.songInfo{
-		width:100%;
-		padding:0 0.5em;
-	}
-
-	.results_list{
-		position:relative;
-		font-size:1.25em;
-	}
-
-	.logo{
-		position:fixed;
-		bottom:2em;
-		width:100%;
-		text-align:center;
-	}
-
-	.logo_img{
-		max-height:25vh;
-		max-width:90vw;
-	}
-
-}
-
-@media(max-width: 481px){
-
-	h1{
-		font-size:4em;
-	}
-
-	h2{
-		font-size:3em;
-	}
-
-	.results_list{
-		font-size:1em;
+		padding:1em;
 	}
 
 }

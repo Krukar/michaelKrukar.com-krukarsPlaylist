@@ -36,6 +36,7 @@
                     <li class="controls_item"><a href="" class="mute" data-ng-click="toggleMute()" data-ng-class="mute ? 'on' : ''"></a></li>
                     <li class="controls_item"><a href="" class="shuffle" data-ng-click="toggleShuffle()" data-ng-class="shuffle ? 'on' : ''"></a></li>
                     <li class="controls_item"><a href="" class="video" data-ng-click="toggleVideo()" data-ng-class="showVideo ? 'on' : ''"></a></li>
+                    <li class="controls_item"><a href="" class="cloud" data-ng-click="mysqlSave()"></a></li>
                 </ul>
 
             </div>
@@ -53,7 +54,7 @@
 
         <div class="results">
 
-        <ul class="results_list">
+            <ul class="results_list">
                 <li data-ng-repeat="searchResult in results | limitTo: 10"><a class="results_item" href="" data-ng-click="clickResult()">{{searchResult.artist}} - {{searchResult.title}}</a></li>
             </ul>
 
@@ -79,11 +80,9 @@
 
                 </div>
 
-                <div class="confirm" data-ng-show="confirm">Delete entire playlist?</div>
-
             </div>
 
-            <ul class="playlist_list" id="js_playlist">
+            <ul ui-sortable data-ng-model="playlist" class="playlist_list">
                 <li class="playlist_item" data-ng-repeat="song in playlist track by $index" data-ng-class="{'active': $index == currentSong}"><a class="playlist_song" href="" data-ng-click="goToSong()">{{song.artist}} <span data-ng-show="song.artist">-</span> {{song.title}}</a><a class="x" href="" data-ng-click="removeSong()"></a></li>
             </ul>
 
@@ -92,18 +91,22 @@
     </div>
 
     <div class="logo">
-        <img class="logo_img" src="img/krukarsPlaylist.png">
+        <img class="logo_img" src="img/krukarsPlaylist.png" alt="Krukar's Playlist Logo">
     </div>
 
     <div class="popUp" data-ng-show="showPopUp" data-ng-cloak>
-        {{popUpMessage}}
+
+        <div class="popUpText">{{popUpMessage}}</div>
+
+        <a class="x" href="" data-ng-click="showPopUp = false"></a>
+
     </div>
 
     <div class="videoContainer" data-ng-show="showVideo">
         <div id="video"></div>
     </div>
 
-    <script src="js/angular.min.js"></script>
-    <script src="js/app.js"></script>
+    <script src="http://cdn.jsdelivr.net/g/jquery@1,jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min.js%29,angularjs@1.2,angular.ui-sortable"></script>
+    <script src="js/app.min.js"></script>
 </body>
 </html>

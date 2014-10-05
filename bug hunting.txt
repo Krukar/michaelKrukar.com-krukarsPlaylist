@@ -13,3 +13,9 @@ September 28, 2014 - Release Candidate 1
 - Android, Chrome: Sometimes you have to hit play for it to start playing - UNFIXABLE I believe this is a result of mobile autoplay
 - All: Type in Krukar and the results are blank - FIXED by adding a check if lastFM data is bogus
 - Android, Chrome: When the song is too long the top bar disappears - FIXED by z-index
+
+October 2, 2014	- Released Candidate 1.02
+- All: When you sort the active song, the active song is off
+- All: Delete active song, still plays - FIXED by adding an if statement as soon as you remove song
+- All: If you localStorage.clear(); and do not refresh the page it will screw up generating a new key. I don't think this a real issue but should be worth noting
+- All: Does not save when you reorder a list, but will save next time there's a call to the storeLocally function

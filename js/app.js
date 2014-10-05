@@ -6,29 +6,28 @@
  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 //Global Variables
-var quickSearchTimer; //The function to delay searching while people type
+var customPlaylists = ['krukar', 'live laugh love']; //Array of custom playlist titles
+var quickSearchTimer; //Used to determine if a person has stopped typing
+var youTubeState = 0; //Global variable for keeping track of the state of the video
 
 //Angular Settings
-var KPApp = angular.module('krukarsPlaylist', []);
+var KPApp = angular.module('krukarsPlaylist', ['ui.sortable']);
 
-KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLastFM, ajaxYouTube, ajaxCustomPlaylist){
+KPApp.controller('mainController', ['$rootScope', '$scope', '$window', 'ajaxCalls', function($rootScope, $scope, $window, ajaxCalls){
 
 	//Scope Variables
 	$scope.results = []; //The results that people see
 	$scope.playlist = localStorage.playlist === undefined ? [] : angular.fromJson(localStorage.playlist); //The playlist. Is there no playlist in localstorage ? Make a new one : load from localstorage
-	var customPlaylists = ['krukar', 'marina', 'live laugh love']; //Array of custom playlist titles
 
 	$scope.popUpMessage = ''; //Push notification message
 	$scope.showPopUp = false; //Push notification message visibility
-
-	$scope.youTubeState = 0; //Global variable for keeping track of the state of the video
-	$scope.pause = true; //Tracks play and pause
+	$scope.pause = false; //Tracks play and pause
 	$scope.mute = false; //Toggles mute
 
 	//Options
-	$scope.currentSong = angular.fromJson(localStorage.currentSong) === undefined ? 0 : angular.fromJson(localStorage.currentSong); //The current song playing. If someone comes back, grab their spot in the playlist
-	$scope.shuffle = angular.fromJson(localStorage.shuffle) === undefined ? false : angular.fromJson(localStorage.shuffle); //Toggle shuffle
-	$scope.showVideo = angular.fromJson(localStorage.showVideo) === undefined ? true : angular.fromJson(localStorage.showVideo); //Toggles video display. Set it to true by default because Firefox cannot handle if it's false, so has to be disabled for FF
+	$scope.currentSong = localStorage.currentSong === undefined ? 0 : localStorage.currentSong; //The current song playing. If someone comes back, grab their spot in the playlist
+	$scope.shuffle = localStorage.shuffle === undefined ? false : angular.fromJson(localStorage.shuffle); //Toggle shuffle
+	$scope.showVideo = localStorage.showVideo === undefined ? true : angular.fromJson(localStorage.showVideo); //Toggles video display. Set it to true by default because Firefox cannot handle if it's false, so has to be disabled for FF
 	$rootScope.header = "Krukar's Playlist"; //Set the page title
 
 	//When people type too fast it does an ajax call every keyup. What does this is when you keyup, it waits 1 second before searching. If you type again in that second, it will reset the timer
@@ -42,7 +41,7 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 
 	//This will create a list underneath the search bar of the top 10 last.FM results
 	$scope.lastFMSearchResults=function(lastFMSearchTerm){
-		ajaxLastFM.getLastFM(lastFMSearchTerm).then(function(lastFMData){
+		ajaxCalls.getLastFM(lastFMSearchTerm).then(function(lastFMData){
 			if(lastFMData.length != 3){
 				angular.forEach(lastFMData.results.trackmatches.track, function(value, key){
 					//Sometimes lastFM will return a bougs empty result, a few  times. This check will prevent that from displaying
@@ -51,7 +50,6 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 							'artist': lastFMData.results.trackmatches.track[key].artist,
 							'title': lastFMData.results.trackmatches.track[key].name
 						}
-						console.log(searchResult);
 						$scope.results.push(searchResult);
 					}
 				}); 
@@ -66,7 +64,7 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 		var searchTitle = $scope.results[this.$index].title;
 		var songClicked = this.$index;
 		var youTubeSearchTerm = searchArtist + ' - ' + searchTitle;
-		ajaxYouTube.getYouTube(youTubeSearchTerm).then(function(youTubeData){
+		ajaxCalls.getYouTube(youTubeSearchTerm).then(function(youTubeData){
 			var searchResult = {
 				'artist': searchArtist,
 				'title': searchTitle,
@@ -86,13 +84,16 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 		if(customPlaylists.indexOf(lastFMSearchTerm) > -1){
 			$scope.customSubmit(lastFMSearchTerm);
 		}
-		//If does not appear run the regular submitSearch
+		//Do the first 3 letters in lower case = kp0 (that means they're loading a KPID)
+		else if(lastFMSearchTerm.substring(0,3) == 'KP0'){
+			$scope.mysqlGet(lastFMSearchTerm);
+		}
 		else{
-			ajaxLastFM.getLastFM(lastFMSearchTerm).then(function(lastFMData){
+			ajaxCalls.getLastFM(lastFMSearchTerm).then(function(lastFMData){
 				var lastFMError = lastFMData.length == 3 ? true : false; //My custom last.FM error check. If it returns no data it will return an empty array, which is length 3
 				var youTubeSearchTerm = lastFMError ? lastFMSearchTerm : angular.isArray(lastFMData.results.trackmatches.track) ? lastFMData.results.trackmatches.track[0].artist + ' - ' + lastFMData.results.trackmatches.track[0].name : lastFMSearchTerm;
 				//Search Youtube using = was there an error ? if yes then use the raw input. Otherwise are the results an array ? If it's an array use the first input : otherwise use the raw input
-				ajaxYouTube.getYouTube(youTubeSearchTerm).then(function(youTubeData){
+				ajaxCalls.getYouTube(youTubeSearchTerm).then(function(youTubeData){
 					if (youTubeData.feed.openSearch$totalResults.$t > 0){
 						var artist = lastFMError ? '' : angular.isArray(lastFMData.results.trackmatches.track) ? lastFMData.results.trackmatches.track[0].artist : '';
 						var title = lastFMError ? youTubeData.feed.entry[0].title.$t : angular.isArray(lastFMData.results.trackmatches.track) ? lastFMData.results.trackmatches.track[0].name : youTubeData.feed.entry[0].title.$t;
@@ -109,7 +110,7 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 					} 
 				}); 
 			}); 
-		} //else - this comment is only hear because otherwise formatting is broken in subblime
+		} //this comment is only hear because otherwise formatting is broken in subblime
 	} 
 
 	//This function takes the searchResult var and adds it the playlist
@@ -119,7 +120,38 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 		if($scope.playlist.length == 1){
 			$scope.playVideo();
 		}
-		$scope.localStore();
+		$scope.storeLocally();	
+	}
+
+	//This function will store your plylist in the mysql db
+	$scope.mysqlSave=function(){
+		//So that people don't save empty playlists
+		if($scope.playlist.length >= 1){
+			ajaxCalls.setMYSQL($scope.playlist).then(function(kpid){
+				$scope.popUp("Your playlist has been saved. Paste " + kpid + " to retrieve it.");
+				$scope.$apply(); //For some reason the message will not pop up unless you apply
+			});	
+		}
+		else{
+			$scope.popUp("Sorry, you need at least 1 song in your playlist to save.");
+		}
+		
+	}
+
+	$scope.mysqlGet=function(term){
+		ajaxCalls.getMYSQL(term).then(function(phpPlaylist){
+			//If the person types in kp0 and the database doesn't exist, it returns an empty string. So this is our error check
+			if(phpPlaylist.length >= 1){
+				$scope.playlist = angular.fromJson(phpPlaylist);
+				$scope.popUp("Loaded playlist " + term);
+				$scope.currentSong = 0;
+				$scope.playVideo();
+				$scope.$apply();
+			}
+			else{
+				$scope.popUp("Sorry, could not load that playlist.");	
+			}
+		});	
 	}
 
 	//resets search input and results array
@@ -129,52 +161,58 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 	}
 
 	//Call this anytime we want to store stuff
-	$scope.localStore=function(){
+	$scope.storeLocally=function(){
 		//Create an array of options for people to store
 		localStorage.setItem('playlist', angular.toJson($scope.playlist)); //Store the playlist
-		localStorage.setItem('currentSong', angular.toJson($scope.currentSong)); //Store the currentSong
-		localStorage.setItem('showVideo', angular.toJson($scope.showVideo));
-		localStorage.setItem('shuffle', angular.toJson($scope.shuffle));
+		localStorage.setItem('currentSong', $scope.currentSong); //Store the currentSong, since it's an int does not need to be serialized (I hope)
+		localStorage.setItem('showVideo', angular.toJson($scope.showVideo)); //Store showVideo option
+		localStorage.setItem('shuffle', angular.toJson($scope.shuffle)); //Store shuffle option
 	}
 
 	//When people click on a song
 	$scope.goToSong=function(){
 		$scope.currentSong = this.$index; //Set the currentSong to the one people clicked
 		$scope.playVideo();
-		$scope.localStore();
+		$scope.showMenu = !$scope.showMenu; //Hide menu, since you clicked a song you obviously won't click another (debatable)	
+		$scope.storeLocally();
 	}
 
 	//Remove a song from the playlist
 	$scope.removeSong=function(){
 		$scope.playlist.splice(this.$index, 1);
-		//Is the currentSong less than the song we're cutting out ? leave it : is it 0 or less ? leave it at 0 : take away 1. This will keep our currentSong consistent if you remove a song that has already been played
-		$scope.currentSong = $scope.currentSong < this.$index ? $scope.currentSong : $scope.currentSong <= 0 ? 0 : $scope.currentSong  - 1;
-		$scope.localStore();
+		//If you remove the song that's active, it should just stop
+		if($scope.currentSong == this.$index){
+			$scope.nextSong();
+		}
+		else{
+			//Is the currentSong less than the song we're cutting out ? leave it : is it 0 or less ? leave it at 0 : take away 1. This will keep our currentSong constantlyistent if you remove a song that has already been played
+			$scope.currentSong = $scope.currentSong < this.$index ? $scope.currentSong : $scope.currentSong <= 0 ? 0 : $scope.currentSong  - 1;
+		}
+		$scope.storeLocally();
 	}
 
 	//Clear the entire playlist
 	$scope.clearPlaylist=function(){
+		$scope.showMenu = !$scope.showMenu;
 		$scope.playlist = [];
 		$scope.currentSong = 0;
-		$scope.localStore();
 		player.stopVideo();
+		$rootScope.header = "Krukar's Playlist";
+		$scope.storeLocally();
 	}
 
 	$scope.pauseVideo=function(){
-		if($scope.playlist.length >= 1){
-			if ($scope.youTubeState == 1){
-				$scope.pause = true;
-				player.pauseVideo();
-			}
-			else if($scope.youTubeState == 0){
-				$scope.pause = false;
-				$scope.playVideo();
-			}
-			else{
-				$scope.pause = false;
-				player.playVideo();
-			}
-		} 
+		if(youTubeState == 1){
+			$scope.pause = true;
+			player.pauseVideo();
+		}
+		else if(youTubeState == 2){
+			$scope.pause = false;
+			player.playVideo();
+		}
+		else{
+			$scope.playVideo();
+		}
 	}
 
 	//When people click previous
@@ -184,7 +222,7 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 			//Is the current Song the top of the list ? go to the bottom : go back one
 			$scope.currentSong = $scope.currentSong <= 0 ? $scope.playlist.length-1 : $scope.currentSong - 1;
 			$scope.playVideo();
-			$scope.localStore();
+			$scope.storeLocally();
 		}
 	}
 
@@ -195,7 +233,7 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 			//Is shuffle on ? go to random number : is it the bottom of hte playlist ? go to the top : go to the next one
 			$scope.currentSong = $scope.shuffle ? (Math.floor(Math.random() * (($scope.playlist.length-1) - 0 + 1)) + 0) : $scope.currentSong >= $scope.playlist.length-1 ? 0 : $scope.currentSong + 1;
 			$scope.playVideo();
-			$scope.localStore();
+			$scope.storeLocally();
 		}
 	}
 
@@ -213,35 +251,31 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 	//Toggle shuffle when people click on it
 	$scope.toggleShuffle=function(){
 		$scope.shuffle = !$scope.shuffle;
-		$scope.localStore();
+		$scope.storeLocally();
 	}
 
 	//Toggle video when people click on it
 	$scope.toggleVideo=function(){
 		$scope.showVideo =!$scope.showVideo;
-		$scope.localStore();
+		$scope.storeLocally();
 	}
 
 	//When people type in a custom search term that matches something our custom playlist array
 	$scope.customSubmit=function(customTerm){
-		ajaxCustomPlaylist.getCustomPlaylist().then(function(customPlaylist){
-			$scope.playlist = customPlaylist.data[customTerm]; //Replace the current playlist with the custom playlist
-			$scope.shuffle = true; //Turn on shuffle since I like to shuffle my playlist
-			$scope.popUp("Enjoy " + customTerm + "'s playlist.");
-			$scope.nextSong();
+		ajaxCalls.getCustomPlaylist().then(function(customPlaylist){
+			$scope.playlist = $scope.playlist.concat(customPlaylist.data[customTerm]); //Append the current playlist with the custom playlist
+			$scope.shuffle = false;
+			$scope.currentSong = 0;
+			$scope.playVideo(); //Start at the top of the playlist
+			$scope.popUp("Enjoy " + customTerm + "'s playlist.", 3000);
+			$scope.storeLocally();
 		}); 
 	}
 
 	//PopUp message function
-	$scope.popUp=function(popUpText){
+	$scope.popUp=function(popUpText, duration){
 		$scope.showPopUp = true; //Make the form visible
 		$scope.popUpMessage = popUpText; //Replace the message with what we sent it
-		//After 3 seconds hide the message
-		setTimeout(function(){
-			$scope.showPopUp = false;
-			//Automated DOM manipulation requires $scope.apply();
-			$scope.$apply();
-		}, 3000);
 	}
 
 	//When the YoutubeAPI is ready it creates the video player
@@ -264,7 +298,7 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 
 	//Anytime a change has been made to the video this function is run
 	$scope.onPlayerStateChange=function(event) {
-		$scope.youTubeState = event.data; //Our global state tracker
+		youTubeState = event.data; //Our global state tracker
 		//If a song has ended go to the next one
 		if(event.data == 0){
 			$scope.nextSong();
@@ -278,12 +312,12 @@ KPApp.controller('mainController', function($rootScope, $scope, $window, ajaxLas
 		$rootScope.header = $scope.playlist[$scope.currentSong].title + ' - ' + $scope.playlist[$scope.currentSong].artist; //Page title is set to title - artist
 	}
 
-});
+}]);
 
-//Our factory that calls Last.FM
-KPApp.factory('ajaxLastFM', function($http) {
+//Our mega factory
+KPApp.factory('ajaxCalls', ['$http', function($http){
 
-	return {
+	return{
 
 		getLastFM: function (ajaxLastFMSearchTerm){
 
@@ -291,16 +325,7 @@ KPApp.factory('ajaxLastFM', function($http) {
 				return ajaxLastFMResponse.data;
 			});
 			return ajaxLastFMPromise;
-		} 
-
-	} 
-
-});
-
-//Ouf factory that calls YouTube
-KPApp.factory('ajaxYouTube', function($http) {
-
-	return {
+		},
 
 		getYouTube: function(ajaxYouTubeSearchTerm) {
 
@@ -308,25 +333,47 @@ KPApp.factory('ajaxYouTube', function($http) {
 				return ajaxYouTubeResponse.data;
 			});
 			return ajaxYouTubePromise;
-		} 
+		},
 
-	} 
+		getCustomPlaylist: function() {
 
-});
+			var ajaxCustomPlaylistPromise = $http.get('custom.json').then(function (ajaxCustomPlaylistResponse) {
+				return ajaxCustomPlaylistResponse;
+			});
+			return ajaxCustomPlaylistPromise;
+		},
 
- //Our factory that gets my custom playlist
- KPApp.factory('ajaxCustomPlaylist', function($http) {
+		setMYSQL: function(ajaxPlaylist) {
 
- 	return {
+			var setMYSQLPromise = $.post('php/setMYSQL.php', {
+				phpPlaylist: angular.toJson(ajaxPlaylist)
+			}).then(function (setMYSQLResponse) {
+				return setMYSQLResponse;
+			});
+			return setMYSQLPromise;
 
- 		getCustomPlaylist: function() {
+		},
 
- 			var ajaxCustomPlaylistPromise = $http.get('custom.json').then(function (ajaxCustomPlaylistResponse) {
- 				return ajaxCustomPlaylistResponse;
- 			});
- 			return ajaxCustomPlaylistPromise;
- 		} 
+		getMYSQL: function(ajaxKPID){
 
- 	} 
+			var getMYSQLPromise = $.post('php/getMYSQL.php', {
+				phpKpid: ajaxKPID,
+			}).then(function (getMYSQLResponse) {
+				return getMYSQLResponse;
+			});
+			return getMYSQLPromise;
 
- });
+		}
+
+	}
+
+}]);
+
+//Google Analytics
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-12435905-12', 'auto');
+ga('send', 'pageview');
