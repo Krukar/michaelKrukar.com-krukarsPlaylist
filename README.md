@@ -37,3 +37,4 @@ Type in Krukar and hit enter to listen to Krukar's playlist
 													- Storing your playlist in a db now works
 - October 4, 2014		- Version 1
 
+- October 5, 2014		- Version 1.1 				- Your unique ID is now stored in localStorage and will always update your list until you clear your cache

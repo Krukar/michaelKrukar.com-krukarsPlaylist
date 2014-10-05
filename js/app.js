@@ -128,6 +128,7 @@ KPApp.controller('mainController', ['$rootScope', '$scope', '$window', 'ajaxCall
 		//So that people don't save empty playlists
 		if($scope.playlist.length >= 1){
 			ajaxCalls.setMYSQL($scope.playlist).then(function(kpid){
+				localStorage.setItem('kpid', kpid); //Store the kpid
 				$scope.popUp("Your playlist has been saved. Paste " + kpid + " to retrieve it.");
 				$scope.$apply(); //For some reason the message will not pop up unless you apply
 			});	
@@ -345,9 +346,13 @@ KPApp.factory('ajaxCalls', ['$http', function($http){
 
 		setMYSQL: function(ajaxPlaylist) {
 
+			var kpid = localStorage.kpid === undefined ? undefined : localStorage.kpid;
+
 			var setMYSQLPromise = $.post('php/setMYSQL.php', {
+				phpKpid : kpid,
 				phpPlaylist: angular.toJson(ajaxPlaylist)
 			}).then(function (setMYSQLResponse) {
+				console.log(setMYSQLResponse);
 				return setMYSQLResponse;
 			});
 			return setMYSQLPromise;
