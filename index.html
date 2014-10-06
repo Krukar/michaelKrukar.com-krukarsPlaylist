@@ -6,7 +6,7 @@
     <title data-ng-bind="header">Krukar's Playlist</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-ng-controller="mainController">
 
@@ -18,95 +18,99 @@
 
     <div class="main">
 
-        <div class="current">
+       <div class="current">
 
-            <div class="songInfo" data-ng-cloak>
+        <div class="songInfo" data-ng-cloak>
 
-                <h1>{{playlist[currentSong].title}}</h1>
-                <h2>{{playlist[currentSong].artist}}</h2>
-
-            </div>
-
-            <div class="controlsContainer">
-
-                <ul class="controls">
-                    <li class="controls_item"><a href="" class="play" data-ng-click="pauseVideo()" data-ng-class="pause ? 'on' : ''"></a></li>
-                    <li class="controls_item"><a href="" class="previous" data-ng-click="previousSong()"></a></li>
-                    <li class="controls_item"><a href="" class="next" data-ng-click="nextSong()"></a></li>
-                    <li class="controls_item"><a href="" class="mute" data-ng-click="toggleMute()" data-ng-class="mute ? 'on' : ''"></a></li>
-                    <li class="controls_item"><a href="" class="shuffle" data-ng-click="toggleShuffle()" data-ng-class="shuffle ? 'on' : ''"></a></li>
-                    <li class="controls_item"><a href="" class="video" data-ng-click="toggleVideo()" data-ng-class="showVideo ? 'on' : ''"></a></li>
-                    <li class="controls_item"><a href="" class="cloud" data-ng-click="mysqlSave()"></a></li>
-                </ul>
-
-            </div>
+            <h1>{{playlist[currentSong].title}}</h1>
+            <h2>{{playlist[currentSong].artist}}</h2>
 
         </div>
 
-        <div class="search">
-
-            <form class="search_form" data-ng-submit="submitSearch()">
-                <input class="search_input" type="text" autocomplete="off" placeholder="WHAT WOULD YOU LIKE TO LISTEN TO?" data-ng-model="newSearch" data-ng-keyUp="quickSearch()" required autofocus>
-                <a class="x" href="" data-ng-click="resetForm()"></a>
-            </form>
-
+        <div class="volume" data-ng-show="showVolume">
+            
         </div>
 
-        <div class="results">
+        <div class="controlsContainer">
 
-            <ul class="results_list">
-                <li data-ng-repeat="searchResult in results | limitTo: 10"><a class="results_item" href="" data-ng-click="clickResult()">{{searchResult.artist}} - {{searchResult.title}}</a></li>
+            <ul class="controls">
+                <li class="controls_item"><a href="" class="play" data-ng-click="pauseVideo()" data-ng-class="pause ? 'on' : ''"></a></li>
+                <li class="controls_item"><a href="" class="previous" data-ng-click="previousSong()"></a></li>
+                <li class="controls_item"><a href="" class="next" data-ng-click="nextSong()"></a></li>
+                <li class="controls_item"><a href="" class="mute" data-ng-click="toggleVolume()" data-ng-class="showVolume ? 'on' : ''"></a></li>
+                <li class="controls_item"><a href="" class="shuffle" data-ng-click="toggleShuffle()" data-ng-class="shuffle ? 'on' : ''"></a></li>
+                <li class="controls_item"><a href="" class="video" data-ng-click="toggleVideo()" data-ng-class="showVideo ? 'on' : ''"></a></li>
+                <li class="controls_item"><a href="" class="cloud" data-ng-click="mysqlSave()"></a></li>
             </ul>
 
         </div>
 
     </div>
 
-    <div class="offCanvas" data-ng-show="showMenu">
+    <div class="search">
 
-        <div class="section">
+        <form class="search_form" data-ng-submit="submitSearch()">
+            <input class="search_input" type="text" autocomplete="off" placeholder="WHAT WOULD YOU LIKE TO LISTEN TO?" data-ng-model="newSearch" data-ng-keyUp="quickSearch()" required autofocus>
+            <a class="x" href="" data-ng-click="resetForm()"></a>
+        </form>
 
-            <div class="section_header">
+    </div>
 
-                <div class="menuToggle">
+    <div class="results">
 
-                    <a class="music" href="" data-ng-click="showMenu = !showMenu"></a>
+        <ul class="results_list">
+            <li data-ng-repeat="searchResult in results | limitTo: 10"><a class="results_item" href="" data-ng-click="clickResult()">{{searchResult.artist}} - {{searchResult.title}}</a></li>
+        </ul>
 
-                </div>
+    </div>
 
-                <div class="clearPlaylist">
+</div>
 
-                    <a href="" data-ng-click="clearPlaylist()">Clear playlist</a>
+<div class="offCanvas" data-ng-show="showMenu">
 
-                </div>
+    <div class="section">
+
+        <div class="section_header">
+
+            <div class="menuToggle">
+
+                <a class="music" href="" data-ng-click="showMenu = !showMenu"></a>
 
             </div>
 
-            <ul ui-sortable data-ng-model="playlist" class="playlist_list">
-                <li class="playlist_item" data-ng-repeat="song in playlist track by $index" data-ng-class="{'active': $index == currentSong}"><a class="playlist_song" href="" data-ng-click="goToSong()">{{song.artist}} <span data-ng-show="song.artist">-</span> {{song.title}}</a><a class="x" href="" data-ng-click="removeSong()"></a></li>
-            </ul>
+            <div class="clearPlaylist">
+
+                <a href="" data-ng-click="clearPlaylist()">Clear playlist</a>
+
+            </div>
 
         </div>
 
-    </div>
-
-    <div class="logo">
-        <img class="logo_img" src="img/krukarsPlaylist.png" alt="Krukar's Playlist Logo">
-    </div>
-
-    <div class="popUp" data-ng-show="showPopUp" data-ng-cloak>
-
-        <div class="popUpText">{{popUpMessage}}</div>
-
-        <a class="x" href="" data-ng-click="showPopUp = false"></a>
+        <ul ui-sortable data-ng-model="playlist" class="playlist_list">
+            <li class="playlist_item" data-ng-repeat="song in playlist track by $index" data-ng-class="{'active': $index == currentSong}"><a class="playlist_song" href="" data-ng-click="goToSong()">{{song.artist}} <span data-ng-show="song.artist">-</span> {{song.title}}</a><a class="x" href="" data-ng-click="removeSong()"></a></li>
+        </ul>
 
     </div>
 
-    <div class="videoContainer" data-ng-show="showVideo">
-        <div id="video"></div>
-    </div>
+</div>
 
-    <script src="http://cdn.jsdelivr.net/g/jquery@1,jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min.js%29,angularjs@1.2,angular.ui-sortable"></script>
-    <script src="js/app.min.js"></script>
+<div class="logo">
+    <img class="logo_img" src="img/krukarsPlaylist.png" alt="Krukar's Playlist Logo">
+</div>
+
+<div class="popUp" data-ng-show="showPopUp" data-ng-cloak>
+
+    <div class="popUpText">{{popUpMessage}}</div>
+
+    <a class="x" href="" data-ng-click="showPopUp = false"></a>
+
+</div>
+
+<div class="videoContainer" data-ng-show="showVideo">
+    <div id="video"></div>
+</div>
+
+<script src="http://cdn.jsdelivr.net/g/jquery@1,jquery.ui@1.10%28jquery.ui.core.min.js+jquery.ui.widget.min.js+jquery.ui.mouse.min.js+jquery.ui.sortable.min.js+jquery.ui.slider.min.js%29,angularjs@1.2,angular.ui-sortable"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

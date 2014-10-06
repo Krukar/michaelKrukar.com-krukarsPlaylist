@@ -19,3 +19,10 @@ October 2, 2014	- Released Candidate 1.02
 - All: Delete active song, still plays - FIXED by adding an if statement as soon as you remove song
 - All: If you localStorage.clear(); and do not refresh the page it will screw up generating a new key. I don't think this a real issue but should be worth noting
 - All: Does not save when you reorder a list, but will save next time there's a call to the storeLocally function
+
+October 5, 2014	- Version 1.1
+- Windows 8, Internet Explorer 11: White shuffle button does not display
+- All: If you have only 1 song and you delete it, the playlist clears but that song keeps playing
+
+October 6, 2014 - Version 1.2
+- Mobile: Volume slider is pretty wonky, do you even need a volume slider if your phone has that built in. Should probably just use mute for mobile

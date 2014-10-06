@@ -243,12 +243,12 @@ p {
 }
 
 .mute.on {
-  background: url(../img/icons/mute.svg) no-repeat;
+  background: url(../img/icons/volume-red.svg) no-repeat;
   background-size: contain;
 }
 
 .mute.on:hover {
-  background: url(../img/icons/mute-red.svg) no-repeat;
+  background: url(../img/icons/volume.svg) no-repeat;
   background-size: contain;
 }
 
@@ -300,6 +300,19 @@ p {
 .cloud:hover {
   background: url(../img/icons/cloud-red.svg) no-repeat;
   background-size: contain;
+}
+
+.volume {
+  background: #e6e7e8;
+  position: absolute;
+  height: 1em;
+  width: 14em;
+}
+
+.volume .ui-slider-range-min {
+  background: #ed2724;
+  position: absolute;
+  height: 1em;
 }
 
 .search_form {
@@ -550,6 +563,11 @@ p {
     right: 1em;
   }
 
+  .volume {
+    top: 3.5em;
+    right: 2em;
+  }
+
   .offCanvas {
     width: 100%;
   }
@@ -582,6 +600,11 @@ p {
   .controls {
     right: 0;
     bottom: 0;
+  }
+
+  .volume {
+    right: 0;
+    bottom: 2em;
   }
 
   .songInfo {

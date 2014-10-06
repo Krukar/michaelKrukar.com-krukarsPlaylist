@@ -23,6 +23,14 @@ KPApp.controller('mainController', ['$rootScope', '$scope', '$window', 'ajaxCall
 	$scope.showPopUp = false; //Push notification message visibility
 	$scope.pause = false; //Tracks play and pause
 	$scope.mute = false; //Toggles mute
+	$( ".volume" ).slider({
+      range: "min",
+      max: 100,
+      value: 100,
+      change: function( event, ui ) {
+      	player.setVolume(ui.value);
+      }
+    });
 
 	//Options
 	$scope.currentSong = localStorage.currentSong === undefined ? 0 : localStorage.currentSong; //The current song playing. If someone comes back, grab their spot in the playlist
@@ -239,14 +247,8 @@ KPApp.controller('mainController', ['$rootScope', '$scope', '$window', 'ajaxCall
 	}
 
 	//Toggle mute when people click on it
-	$scope.toggleMute=function(){
-		$scope.mute = !$scope.mute;
-		if($scope.mute){
-			player.mute();
-		}
-		else{
-			player.unMute();
-		}
+	$scope.toggleVolume=function(){
+		$scope.showVolume = !$scope.showVolume;
 	}
 
 	//Toggle shuffle when people click on it

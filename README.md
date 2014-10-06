@@ -35,6 +35,9 @@ Type in Krukar and hit enter to listen to Krukar's playlist
 													- Error message now slides in like the menu
 													- Cloud button moved to the controls
 													- Storing your playlist in a db now works
+
 - October 4, 2014		- Version 1
 
 - October 5, 2014		- Version 1.1 				- Your unique ID is now stored in localStorage and will always update your list until you clear your cache
+
+- October 6, 2014		- Version.1.2 				- Changed mute to volume slider
