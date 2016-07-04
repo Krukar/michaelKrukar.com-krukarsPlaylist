@@ -1,7 +1,12 @@
-Krukar's Playlist
+Krukar Radio - Formerly Krukar's Playlist
 ===============
 
-http://krukarsplaylist.com/
+radio.michaelkrukar.com - Formerly http://krukarsplaylist.com/
+
+Plays music I like via Youtube.
+
+OLD
+--------------
 
 About
 --------------
