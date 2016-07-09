@@ -5,6 +5,15 @@ radio.michaelkrukar.com - Formerly http://krukarsplaylist.com/
 
 Plays music I like via Youtube.
 
+1.1.0
+July 9, 2016
+- Added pause, video and playlist UI
+- New Analytics code
+
+1.0.0
+July 4, 2016
+- MVP
+
 OLD
 --------------
 
