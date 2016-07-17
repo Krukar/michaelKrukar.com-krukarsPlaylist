@@ -6,6 +6,12 @@ radio.michaelkrukar.com - Formerly http://krukarsplaylist.com/
 Plays music I like via Youtube.
 
 1.1.0
+July 17, 2016
+- Added new songs
+- Changed songs to json file instead of hardcoded in to js
+- Fixed a bug when clicking on first song in the tracklist
+
+1.1.0
 July 9, 2016
 - Added pause, video and playlist UI
 - New Analytics code
