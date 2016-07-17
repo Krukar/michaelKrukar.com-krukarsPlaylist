@@ -5,6 +5,10 @@ radio.michaelkrukar.com - Formerly http://krukarsplaylist.com/
 
 Plays music I like via Youtube.
 
+1.1.1
+July 17, 2016
+- Minifier broke the js, had to fix
+
 1.1.0
 July 17, 2016
 - Added new songs
